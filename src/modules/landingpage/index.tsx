@@ -15,23 +15,25 @@ export default function LandingPage() {
   ];
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen p-6 sm:p-8 gap-6 space-y-8"
-      // style={{
-      //   backgroundImage:
-      //     "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url('/crime2.jpg')",
-      //   backgroundSize: "cover",
-      //   backgroundPosition: "center",
-      // }}
+      className="flex flex-col items-center justify-center min-h-screen p-6 sm:p-8 gap-6 space-y-8 w-full"
+      //   style={{
+      //     backgroundImage:
+      //       "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url('/crime2.jpg')",
+      //     backgroundSize: "cover",
+      //     backgroundPosition: "center",
+      //   }}
     >
-      <Ticker messages={messages} speed={25} />
+      <Ticker messages={messages} speed={35} />
 
       <h1 className="text-2xl sm:text-4xl font-bold text-center">
         Stay Safe. Report Crime. Track Justice.
       </h1>
       <div>
-        <button className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-[12px] hover:bg-blue-700 transition font-bold">
-          Login to report a crime
-        </button>
+        <Link href={"/login"} passHref>
+          <button className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-[12px] hover:bg-blue-700 transition font-bold">
+            Login to report a crime
+          </button>
+        </Link>
 
         <p className="text-center mt-2.5">
           {"Don't have an account?"}{" "}
