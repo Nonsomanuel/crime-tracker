@@ -37,7 +37,7 @@ const navigationData = {
         {
           title: "Report Crime",
           icon: <NotebookPenIcon size={20} />,
-          url: "",
+          url: "/reportcrime",
         },
       ],
     },

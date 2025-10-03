@@ -8,7 +8,7 @@ export function Breadcrumbs() {
   // Mapping for custom labels
   const segmentLabels: Record<string, string> = {
     home: "Dashboard",
-    reportCrime: "Report Crime",
+    reportcrime: "Report Crime",
   };
 
   // Split the pathname into segments

@@ -33,7 +33,7 @@ export default function HomePage() {
           Welcome back, User
         </h1>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-          <Link href="">
+          <Link href="/reportcrime">
             <Button className="px-3 py-2 font-semibold text-[16px] sm:text-[18px]">
               <NotebookPenIcon />
               Report New Crime
@@ -89,7 +89,7 @@ export default function HomePage() {
           </h3>
           <MegaphoneIcon className="text-gray-500" size={30} />
         </div>
-        <Ticker messages={messages} speed={35} />
+        <Ticker messages={messages} speed={40} />
       </div>
     </div>
   );
