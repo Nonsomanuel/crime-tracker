@@ -318,7 +318,7 @@ export function ReportForm() {
             )}
           </div>
           <Button className="text-[14px] px-4 py-2.5" type="submit">
-            Submit
+            Submit Report
           </Button>
         </form>
       </Form>
