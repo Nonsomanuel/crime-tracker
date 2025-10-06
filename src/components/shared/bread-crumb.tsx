@@ -9,6 +9,7 @@ export function Breadcrumbs() {
   const segmentLabels: Record<string, string> = {
     home: "Dashboard",
     reportcrime: "Report Crime",
+    trackstatus: "Track Status",
   };
 
   // Split the pathname into segments

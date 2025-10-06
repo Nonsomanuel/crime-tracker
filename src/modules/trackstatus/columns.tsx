@@ -29,8 +29,6 @@ export const MobileUserCard = ({ user }: MobileUserCardProps) => (
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem
-          // ❌ Before: onClick={(user)} → invalid
-          // ✅ After: properly wrapped in a callback
           onClick={() => console.log("Editing report:", user.id)}
           className="cursor-pointer"
         >
@@ -46,11 +44,11 @@ export const MobileUserCard = ({ user }: MobileUserCardProps) => (
     </DropdownMenu>
 
     {/* User Info */}
-    <div className="text-[#228329] font-normal text-[16px] leading-6 tracking-[-0.288px] break-words">
+    <div className="text-blue-600 font-normal text-[16px] leading-6 tracking-[-0.288px] break-words">
       <span className="font-semibold">Report ID: </span>
       {user.id}
     </div>
-    <div className="text-[#228329] font-normal text-[16px] leading-6 tracking-[-0.288px] break-words">
+    <div className="text-blue-600 font-normal text-[16px] leading-6 tracking-[-0.288px] break-words">
       <span className="font-semibold">Crime Type: </span>
       {user.crimeType}
     </div>
@@ -100,7 +98,6 @@ const StatusBadge = ({ status }: { status: CrimeStatus }) => {
   );
 };
 
-// ✅ Fixed type and syntax errors here
 export const columns = (): ColumnDef<CrimeTracker>[] => [
   {
     accessorKey: "id",
@@ -110,7 +107,7 @@ export const columns = (): ColumnDef<CrimeTracker>[] => [
       </span>
     ),
     cell: ({ row }) => (
-      <span className="text-[#228329] font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
+      <span className="text-blue-800 font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
         {row.getValue("id")}
       </span>
     ),
@@ -123,7 +120,7 @@ export const columns = (): ColumnDef<CrimeTracker>[] => [
       </span>
     ),
     cell: ({ row }) => (
-      <span className="text-[#228329] font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
+      <span className="text-blue-800 font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
         {row.getValue("crimeType")}
       </span>
     ),
