@@ -39,7 +39,7 @@ export default function HomePage() {
               Report New Crime
             </Button>
           </Link>
-          <Link href="">
+          <Link href="/trackstatus">
             <Button className="px-3 py-2 font-semibold text-[16px] sm:text-[18px]">
               <ChartLineIcon />
               Track My Reports

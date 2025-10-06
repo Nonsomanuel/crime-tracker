@@ -14,6 +14,7 @@ import {
 import { Separator } from "@radix-ui/react-separator";
 import clsx from "clsx";
 import {
+  ChartLineIcon,
   //   CaseLowerIcon,
   LayoutTemplateIcon,
   NotebookPenIcon,
@@ -38,6 +39,11 @@ const navigationData = {
           title: "Report Crime",
           icon: <NotebookPenIcon size={20} />,
           url: "/reportcrime",
+        },
+        {
+          title: "Track Status",
+          icon: <ChartLineIcon size={20} />,
+          url: "/trackstatus",
         },
       ],
     },
@@ -73,10 +79,10 @@ export function AppSidebar() {
                     >
                       <Link
                         href={item.url}
-                        className="py-5 px-4 font-radio_canada flex items-center"
+                        className="py-5 px-4 font-radio_canada flex items-center font-semibold"
                       >
                         <span className="mr-3">{item.icon}</span>
-                        <span className="text-sm">{item.title}</span>
+                        <span className="text-[16px]">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
