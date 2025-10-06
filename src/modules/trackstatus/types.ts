@@ -21,5 +21,6 @@ export interface CrimeTracker {
   crimeType: CrimeType;
   location: string;
   dateReported: string;
+  timeReported: string;
   status: CrimeStatus;
 }

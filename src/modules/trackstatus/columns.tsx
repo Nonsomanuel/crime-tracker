@@ -44,11 +44,11 @@ export const MobileUserCard = ({ user }: MobileUserCardProps) => (
     </DropdownMenu>
 
     {/* User Info */}
-    <div className="text-blue-600 font-normal text-[16px] leading-6 tracking-[-0.288px] break-words">
+    <div className="text-blue-600 font-semibold text-[16px] leading-6 tracking-[-0.288px] break-words">
       <span className="font-semibold">Report ID: </span>
       {user.id}
     </div>
-    <div className="text-blue-600 font-normal text-[16px] leading-6 tracking-[-0.288px] break-words">
+    <div className="text-blue-600 font-semibold text-[16px] leading-6 tracking-[-0.288px] break-words">
       <span className="font-semibold">Crime Type: </span>
       {user.crimeType}
     </div>
@@ -59,6 +59,10 @@ export const MobileUserCard = ({ user }: MobileUserCardProps) => (
     <div className="text-[16px] font-normal break-words">
       <span className="font-semibold">Date Reported: </span>
       {user.dateReported}
+    </div>
+    <div className="text-[16px] font-normal break-words">
+      <span className="font-semibold">Time Reported: </span>
+      {user.timeReported}
     </div>
     <div className="text-[16px] font-normal break-words">
       <span className="font-semibold">Status: </span>
@@ -107,7 +111,7 @@ export const columns = (): ColumnDef<CrimeTracker>[] => [
       </span>
     ),
     cell: ({ row }) => (
-      <span className="text-blue-800 font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
+      <span className="text-blue-800 font-radio_canada text-[16px] font-semibold leading-6 tracking-[-0.288px]">
         {row.getValue("id")}
       </span>
     ),
@@ -120,7 +124,7 @@ export const columns = (): ColumnDef<CrimeTracker>[] => [
       </span>
     ),
     cell: ({ row }) => (
-      <span className="text-blue-800 font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
+      <span className="text-blue-800 font-radio_canada text-[16px] font-semibold leading-6 tracking-[-0.288px]">
         {row.getValue("crimeType")}
       </span>
     ),
@@ -148,6 +152,19 @@ export const columns = (): ColumnDef<CrimeTracker>[] => [
     cell: ({ row }) => (
       <span className="text-[#010D0D] font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
         {row.getValue("dateReported")}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "timeReported",
+    header: () => (
+      <span className="text-[#010D0D] font-radio_canada text-[14px] font-semibold leading-6 tracking-[-0.21px]">
+        Time Reported
+      </span>
+    ),
+    cell: ({ row }) => (
+      <span className="text-[#010D0D] font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
+        {row.getValue("timeReported")}
       </span>
     ),
   },

@@ -10,6 +10,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Robbery,
     location: "Lagos Mainland, Nigeria",
     dateReported: "2025-09-28",
+    timeReported: "08:45 AM",
     status: CrimeStatus.Resolved,
   },
   {
@@ -17,6 +18,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Fraud,
     location: "Abuja, Nigeria",
     dateReported: "2025-09-30",
+    timeReported: "02:15 PM",
     status: CrimeStatus.InProgress,
   },
   {
@@ -24,6 +26,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Assault,
     location: "Port Harcourt, Nigeria",
     dateReported: "2025-10-02",
+    timeReported: "11:30 AM",
     status: CrimeStatus.PendingReview,
   },
   {
@@ -31,6 +34,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Kidnapping,
     location: "Kaduna, Nigeria",
     dateReported: "2025-10-01",
+    timeReported: "09:00 PM",
     status: CrimeStatus.Rejected,
   },
   {
@@ -38,6 +42,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Theft,
     location: "Ibadan, Nigeria",
     dateReported: "2025-09-25",
+    timeReported: "07:20 AM",
     status: CrimeStatus.Resolved,
   },
   {
@@ -45,6 +50,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Robbery,
     location: "Enugu, Nigeria",
     dateReported: "2025-09-29",
+    timeReported: "04:55 PM",
     status: CrimeStatus.InProgress,
   },
   {
@@ -52,6 +58,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Fraud,
     location: "Benin City, Nigeria",
     dateReported: "2025-09-23",
+    timeReported: "01:40 PM",
     status: CrimeStatus.PendingReview,
   },
   {
@@ -59,6 +66,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Assault,
     location: "Jos, Nigeria",
     dateReported: "2025-09-20",
+    timeReported: "10:05 PM",
     status: CrimeStatus.Rejected,
   },
   {
@@ -66,6 +74,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Others,
     location: "Abeokuta, Nigeria",
     dateReported: "2025-09-27",
+    timeReported: "06:10 PM",
     status: CrimeStatus.InProgress,
   },
   {
@@ -73,6 +82,7 @@ export const mockCrimeReports: CrimeTracker[] = [
     crimeType: CrimeType.Theft,
     location: "Uyo, Nigeria",
     dateReported: "2025-09-19",
+    timeReported: "09:25 AM",
     status: CrimeStatus.Resolved,
   },
 ];
