@@ -1,9 +1,8 @@
-// crime status
 export enum CrimeStatus {
-  Resolved = "resolved",
-  InProgress = "inprogress",
-  PendingReview = "pendigreview",
-  Rejected = "rejected",
+  Resolved = "Resolved",
+  InProgress = "In Progress",
+  PendingReview = "Pending Review",
+  Rejected = "Rejected",
 }
 
 export enum CrimeType {
@@ -15,12 +14,11 @@ export enum CrimeType {
   Others = "Others",
 }
 
-//crime tracker table details
 export interface CrimeTracker {
   id: string;
-  crimeType: CrimeType;
+  crimeType: string;
   location: string;
   dateReported: string;
   timeReported: string;
-  status: CrimeStatus;
+  status: string;
 }

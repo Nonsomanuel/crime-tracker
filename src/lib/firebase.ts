@@ -1,21 +1,20 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyBVlLFCvF0vPmiHfiNUKVDw9JFQmoaQ-3A",
   authDomain: "crime-tracker-5299b.firebaseapp.com",
   projectId: "crime-tracker-5299b",
-  storageBucket: "crime-tracker-5299b.firebasestorage.app",
+  storageBucket: "crime-tracker-5299b.appspot.com", // ✅ FIXED
   messagingSenderId: "887253249053",
   appId: "1:887253249053:web:b6936eb0ad78b45908eaf4",
   measurementId: "G-WKJ4SHEJLX",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// ✅ Prevent re-initialization
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+// ✅ Initialize Firebase services
+export const auth = getAuth(app);
+export const db = getFirestore(app);

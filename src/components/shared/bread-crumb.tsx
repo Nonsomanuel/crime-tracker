@@ -10,6 +10,7 @@ export function Breadcrumbs() {
     home: "Dashboard",
     reportcrime: "Report Crime",
     trackstatus: "Track Status",
+    admindashboard: "Admin Dashboard",
   };
 
   // Split the pathname into segments

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -14,8 +16,14 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChartLineLinear } from "../linechart";
 import Ticker from "@/components/ticker/ticker";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function HomePage() {
+  const [userData, setUserData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
   const messages = [
     "🚨 Robbery reported near Ikeja — stay alert and avoid late-night movement in the area.",
     "🔥 Fire incident reported in Surulere — emergency services on ground.",
@@ -26,11 +34,40 @@ export default function HomePage() {
     "🏠 House break-in reported at Gbagada — residents advised to secure properties.",
     "💡 Community meeting scheduled in Mushin on safety awareness.",
   ];
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // Fetch Firestore user info
+        const userDocRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userDocRef);
+        if (userSnap.exists()) {
+          setUserData(userSnap.data());
+        } else {
+          console.warn("No user document found in Firestore");
+        }
+      } else {
+        setUserData(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-500 text-lg">Loading dashboard...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="px-8 py-6 bg-white rounded-[16px] min-h-screen overflow-x-hidden">
       <div className="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-semibold sm:text-left text-blue-600">
-          Welcome back, User
+          Welcome back, {userData?.name || "User"}
         </h1>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <Link href="/reportcrime">
@@ -47,10 +84,12 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
+
       <Separator className="h-px bg-gray-300 w-full mt-4" />
+
       <div className="mt-12 space-y-6 w-full">
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 w-full sm:items-center  sm:justify-between">
-          <Card className="shadow-md rounded-[12px] px-4 sm:w-3/12 ">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 w-full sm:items-center sm:justify-between">
+          <Card className="shadow-md rounded-[12px] px-4 sm:w-3/12">
             <CardContent className="items-center justify-center flex flex-col gap-1.5">
               <SquareSigmaIcon size={35} className="text-blue-600" />
               <h2 className="font-semibold text-2xl text-blue-600">
@@ -81,7 +120,9 @@ export default function HomePage() {
 
         <ChartLineLinear />
       </div>
+
       <Separator className="h-px bg-gray-300 w-full mt-10" />
+
       <div className="mt-10 w-full overflow-hidden">
         <div className="flex items-center gap-2">
           <h3 className="font-semibold text-[22px] text-gray-500">

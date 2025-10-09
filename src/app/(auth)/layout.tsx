@@ -1,3 +1,5 @@
+"use client";
+
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import {
   SidebarInset,
@@ -6,41 +8,48 @@ import {
 } from "@/components/ui/sidebar";
 import { Breadcrumbs } from "@/components/shared/bread-crumb";
 import { Toaster } from "@/components/ui/sonner";
-// import { Bell } from "lucide-react";
+import { AuthProvider, useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+function ProtectedLayout({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login"); // redirect if not logged in
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen text-gray-600">
+        Checking authentication...
+      </div>
+    );
+  }
+
+  if (!user) return null; // prevent flicker during redirect
+
   return (
     <SidebarProvider>
-      {/* Sidebar */}
       <AppSidebar />
 
-      {/* Main Content */}
       <SidebarInset>
         {/* Header */}
         <header className="w-full md:px-4 px-6 py-5">
           {/* Mobile Header */}
           <div className="flex items-center justify-between w-full md:hidden">
             <SidebarTrigger className="-ml-1" />
-            {/* <div className="flex items-center gap-x-4">
-              <Bell size={20} />
-              <SettingsDropdown />
-              <AvatarContainer />
-            </div> */}
           </div>
 
           {/* Desktop Header */}
           <div className="md:flex hidden items-center justify-between">
             <Breadcrumbs />
-            {/* <div className="flex items-center gap-x-6">
-              <div>
-                <Bell size={20} />
-              </div>
-              <SettingsDropdown />
-              <AvatarContainer />
-            </div> */}
           </div>
 
-          {/* Breadcrumbs below on mobile */}
+          {/* Mobile Breadcrumbs */}
           <div className="mt-6 md:hidden">
             <Breadcrumbs />
           </div>
@@ -61,5 +70,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         />
       </SidebarInset>
     </SidebarProvider>
+  );
+}
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <AuthProvider>
+      <ProtectedLayout>{children}</ProtectedLayout>
+    </AuthProvider>
   );
 }

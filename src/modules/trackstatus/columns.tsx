@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -16,6 +17,24 @@ import { CrimeStatus, CrimeTracker } from "./types";
 interface MobileUserCardProps {
   user: CrimeTracker;
 }
+
+// Utility function to safely format Firestore timestamps or strings
+const formatFirestoreDate = (value: any, type: "date" | "time" = "date") => {
+  if (!value) return "-";
+
+  if (value?.seconds) {
+    const date = new Date(value.seconds * 1000);
+    return type === "time"
+      ? date.toLocaleTimeString()
+      : date.toLocaleDateString();
+  }
+
+  if (typeof value === "string" || typeof value === "number") {
+    return String(value);
+  }
+
+  return "-";
+};
 
 export const MobileUserCard = ({ user }: MobileUserCardProps) => (
   <div className="p-4 border border-[#CBD5E1] rounded-[10px] bg-white w-full space-y-4">
@@ -44,54 +63,57 @@ export const MobileUserCard = ({ user }: MobileUserCardProps) => (
     </DropdownMenu>
 
     {/* User Info */}
-    <div className="text-blue-600 font-semibold text-[16px] leading-6 tracking-[-0.288px] break-words">
+    <div className="text-blue-600 font-semibold text-[16px]">
       <span className="font-semibold">Report ID: </span>
       {user.id}
     </div>
-    <div className="text-blue-600 font-semibold text-[16px] leading-6 tracking-[-0.288px] break-words">
+    <div className="text-blue-600 font-semibold text-[16px]">
       <span className="font-semibold">Crime Type: </span>
       {user.crimeType}
     </div>
-    <div className="font-normal text-[16px] leading-6 tracking-[-0.288px] break-words">
+    <div className="text-[16px]">
       <span className="font-semibold">Location: </span>
       {user.location}
     </div>
-    <div className="text-[16px] font-normal break-words">
+    <div className="text-[16px]">
       <span className="font-semibold">Date Reported: </span>
-      {user.dateReported}
+      {formatFirestoreDate(user.dateReported, "date")}
     </div>
-    <div className="text-[16px] font-normal break-words">
+    <div className="text-[16px]">
       <span className="font-semibold">Time Reported: </span>
-      {user.timeReported}
+      {formatFirestoreDate(user.timeReported, "time")}
     </div>
-    <div className="text-[16px] font-normal break-words">
+    <div className="text-[16px]">
       <span className="font-semibold">Status: </span>
       <StatusBadge status={user.status} />
     </div>
   </div>
 );
 
-const StatusBadge = ({ status }: { status: CrimeStatus }) => {
-  const statusConfig = {
+const StatusBadge = ({ status }: { status: string }) => {
+  const statusConfig: Record<string, { text: string; className: string }> = {
     [CrimeStatus.Resolved]: {
       text: "Resolved",
-      className: "text-[#228329] bg-[#F0FAEC]",
+      className: "text-[#15803d] bg-[#bbf7d0]",
     },
     [CrimeStatus.InProgress]: {
       text: "In Progress",
-      className: "text-[#EBC22F] bg-[#FFB34A29]",
+      className: "text-[#eab308] bg-[#fef08a]",
     },
     [CrimeStatus.PendingReview]: {
       text: "Pending Review",
-      className: "text-[#228329] bg-[#F0FAEC]",
+      className: "text-[#65a30d] bg-[#d9f99d]",
     },
     [CrimeStatus.Rejected]: {
       text: "Rejected",
-      className: "text-[#E11D48] bg-[#FDECEC]",
+      className: "text-[#dc2626] bg-[#fecaca]",
     },
   };
 
-  const config = statusConfig[status];
+  const config = statusConfig[status] || {
+    text: status || "Unknown",
+    className: "text-gray-600 bg-gray-100",
+  };
 
   return (
     <Badge
@@ -105,78 +127,62 @@ const StatusBadge = ({ status }: { status: CrimeStatus }) => {
 export const columns = (): ColumnDef<CrimeTracker>[] => [
   {
     accessorKey: "id",
-    header: () => (
-      <span className="text-[#010D0D] font-radio_canada text-[14px] font-semibold leading-6 tracking-[-0.21px]">
-        Report ID
-      </span>
-    ),
+    header: () => <span className="font-semibold text-[14px]">Report ID</span>,
     cell: ({ row }) => (
-      <span className="text-blue-800 font-radio_canada text-[16px] font-semibold leading-6 tracking-[-0.288px]">
+      <span className="text-blue-800 font-semibold text-[16px]">
         {row.getValue("id")}
       </span>
     ),
   },
   {
     accessorKey: "crimeType",
-    header: () => (
-      <span className="text-[#010D0D] font-radio_canada text-[14px] font-semibold leading-6 tracking-[-0.21px]">
-        Crime Type
-      </span>
-    ),
+    header: () => <span className="font-semibold text-[14px]">Crime Type</span>,
     cell: ({ row }) => (
-      <span className="text-blue-800 font-radio_canada text-[16px] font-semibold leading-6 tracking-[-0.288px]">
+      <span className="text-blue-800 font-semibold text-[16px]">
         {row.getValue("crimeType")}
       </span>
     ),
   },
   {
     accessorKey: "location",
-    header: () => (
-      <span className="text-[#010D0D] font-radio_canada text-[14px] font-semibold leading-6 tracking-[-0.21px]">
-        Location
-      </span>
-    ),
+    header: () => <span className="font-semibold text-[14px]">Location</span>,
     cell: ({ row }) => (
-      <span className="text-[#010D0D] font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
-        {row.getValue("location")}
-      </span>
+      <span className="text-[16px]">{row.getValue("location")}</span>
     ),
   },
   {
     accessorKey: "dateReported",
     header: () => (
-      <span className="text-[#010D0D] font-radio_canada text-[14px] font-semibold leading-6 tracking-[-0.21px]">
-        Date Reported
-      </span>
+      <span className="font-semibold text-[14px]">Date Reported</span>
     ),
-    cell: ({ row }) => (
-      <span className="text-[#010D0D] font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
-        {row.getValue("dateReported")}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("dateReported");
+      return (
+        <span className="text-[16px]">
+          {formatFirestoreDate(value, "date")}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "timeReported",
     header: () => (
-      <span className="text-[#010D0D] font-radio_canada text-[14px] font-semibold leading-6 tracking-[-0.21px]">
-        Time Reported
-      </span>
+      <span className="font-semibold text-[14px]">Time Reported</span>
     ),
-    cell: ({ row }) => (
-      <span className="text-[#010D0D] font-radio_canada text-[16px] font-normal leading-6 tracking-[-0.288px]">
-        {row.getValue("timeReported")}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const value = row.getValue("timeReported");
+      return (
+        <span className="text-[16px]">
+          {formatFirestoreDate(value, "time")}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "status",
-    header: () => (
-      <span className="text-[#010D0D] font-radio_canada text-[14px] font-semibold leading-6 tracking-[-0.21px]">
-        Status
-      </span>
-    ),
+    header: () => <span className="font-semibold text-[14px]">Status</span>,
     cell: ({ row }) => (
-      <StatusBadge status={row.getValue("status") as CrimeStatus} />
+      <StatusBadge status={row.getValue("status") as string} />
     ),
   },
   {
@@ -187,7 +193,6 @@ export const columns = (): ColumnDef<CrimeTracker>[] => [
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
               <MoreVertical className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -195,16 +200,11 @@ export const columns = (): ColumnDef<CrimeTracker>[] => [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => console.log("Editing report:", user.id)}
-              className="cursor-pointer"
-            >
-              Edit Report
-            </DropdownMenuItem>
+            ></DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => console.log("Deleting report:", user.id)}
-              className="cursor-pointer text-destructive"
-            >
-              Delete Report
-            </DropdownMenuItem>
+              className="text-destructive"
+            ></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
