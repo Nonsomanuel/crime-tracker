@@ -169,7 +169,7 @@ export default function AdminDashboard() {
                       onChange={(e) =>
                         handleStatusUpdate(report.id, e.target.value)
                       }
-                      className="bg-transparent text-sm sm:text-base font-medium outline-none cursor-pointer"
+                      className="bg-transparent text-sm sm:text-base font-medium outline-none cursor-pointer rounded-md"
                     >
                       <option value="Pending Review">Pending Review</option>
                       <option value="In Progress">In Progress</option>

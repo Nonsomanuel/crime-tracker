@@ -38,7 +38,6 @@ import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { useAuth } from "@/hooks/use-auth";
 
-// ✅ Base schema
 const baseSchema = z.object({
   crimeType: z.string().min(2, { message: "Please select a crime type." }),
   description: z
@@ -54,7 +53,6 @@ const baseSchema = z.object({
   email: z.string().optional(),
 });
 
-// ✅ Conditional validation
 const formSchema = baseSchema.superRefine((data, ctx) => {
   if (!data.anonymous) {
     if (!data.name || data.name.trim().length < 2) {
@@ -142,7 +140,7 @@ export function ReportForm() {
         status: "Pending Review",
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
-        reporterEmail: user.email || values.email || null, // ✅ keep track of user email
+        reporterEmail: user.email || values.email || null,
       };
 
       if (!values.anonymous) {
@@ -151,9 +149,9 @@ export function ReportForm() {
         reportData.reporterEmail = values.email || user.email || null;
       }
 
-      console.log("🟢 Sending to Firestore:", reportData);
+      console.log(" Sending to Firestore:", reportData);
       await addDoc(collection(db, "crimeReports"), reportData);
-      console.log("✅ Firestore write success");
+      console.log(" Firestore write success");
 
       toast.success("Crime report submitted successfully!", {
         description: "Authorities will review your case soon.",
@@ -161,7 +159,7 @@ export function ReportForm() {
 
       form.reset();
     } catch (error) {
-      console.error("❌ Firestore write error:", error);
+      console.error("Firestore write error:", error);
       toast.error("Error submitting report. Please try again.");
     }
   }
