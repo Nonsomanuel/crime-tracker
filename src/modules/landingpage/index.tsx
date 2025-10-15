@@ -37,7 +37,7 @@ export default function LandingPage() {
 
         <p className="text-center mt-2.5">
           {"Don't have an account?"}{" "}
-          <Link href={""} className="text-primary font-semibold">
+          <Link href={"/signup"} className="text-primary font-semibold">
             Signup
           </Link>
         </p>

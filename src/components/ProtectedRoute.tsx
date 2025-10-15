@@ -26,6 +26,5 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     );
   }
 
-  // ✅ Only render children if user is logged in
   return <>{user ? children : null}</>;
 }
