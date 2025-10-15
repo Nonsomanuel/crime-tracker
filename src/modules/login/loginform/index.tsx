@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Field, FieldDescription } from "@/components/ui/field";
+import Link from "next/link";
 
 export function LoginForm({
   className,
@@ -83,6 +85,14 @@ export function LoginForm({
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
+        <Field>
+          <FieldDescription className="px-6 text-center text-white">
+            {"Don't have an account?"}{" "}
+            <Link href="/signup" className="no-underline decoration-none">
+              Sign up
+            </Link>
+          </FieldDescription>
+        </Field>
       </div>
     </form>
   );
